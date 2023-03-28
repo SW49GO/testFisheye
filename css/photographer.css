@@ -27,7 +27,11 @@
   cursor: pointer;
   order: 2;
 }
-
+.contact_button:hover,
+.contact_button:focus {
+  background-color: #d3573c;
+  color: #000;
+}
 .modal {
   border-radius: 0.3125rem;
   background-color: #db8876;
@@ -187,6 +191,7 @@ hr {
   background-color: #901c1c;
   border: none;
   width: 9rem;
+  border-radius: 0.3125rem;
 }
 .btn-filter p {
   display: inline;

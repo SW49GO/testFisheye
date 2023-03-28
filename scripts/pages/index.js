@@ -112,7 +112,7 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
   console.log('index.js->displayDataPhotographer');
 
   const mediaSection = document.querySelector('.photograph-header');
-  mediaSection.innerHTML = '';
+
   const personalPhotographer = await getPhotograperById(
     photographers,
     idPhotographer

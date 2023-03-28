@@ -21,9 +21,7 @@ function mediaFactory(data) {
     console.log('factories/media.js->getMediaCardDOM');
     const { name } = data.photographer[0];
     // console.log(name);
-    // constdata.media = data.media.filter(
-    //   (media) => media.photographerId == idPhotographer
-    // );
+
     console.log(data.media[0]);
     const path = name.split(' ')[0];
     const article = document.createElement('article');
