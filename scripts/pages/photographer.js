@@ -9,14 +9,14 @@ console.log('pages/photographers.js');
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Appartition du sous-menu
 const btnSort = document.querySelector('.btn-filter');
-console.log(btnSort);
+// console.log(btnSort);
 if (btnSort != null) {
   const selectMenu = document.querySelector('.select-menu');
   const spanSort = btnSort.getElementsByTagName('span')[0];
   const pSort = btnSort.getElementsByTagName('p')[0];
 
   btnSort.addEventListener('click', function () {
-    console.log('bouton');
+    console.log('photographer.js/ ->btnSord addEventlistener');
     selectMenu.classList.toggle('show');
 
     if (pSort.textContent === '') {
@@ -36,9 +36,7 @@ if (btnSort != null) {
 const numberLikes = document.querySelectorAll('.number-likes');
 const likes = document.querySelector('.likes');
 
-console.log('div de like' + likes);
-
-if (likes != null) {
+if (likes != null && numberLikes) {
   const dataSelect = document.querySelectorAll('.select-menu-item');
   const selectMenu = document.querySelector('.select-menu');
   const pSort = btnSort.getElementsByTagName('p')[0];
@@ -49,6 +47,8 @@ if (likes != null) {
 
   numberLikes.forEach((elt, index) => {
     elt.addEventListener('click', function () {
+      console.log('photographer.js/ ->numberLikes addEventlistener');
+
       if (initialLike[index] === 0) {
         // Si le like était à 0, on l'incrémente en l'initialisant à 1
         initialLike[index] = 1;
@@ -77,88 +77,40 @@ if (likes != null) {
     2: 'Date',
     3: 'Titre',
   };
-
+  // Id du Photographe
+  const photographer = document.querySelector('.photographer-identity');
+  const idPhotographer = photographer.dataset.identity;
+  console.log(idPhotographer);
   for (let i = 0; i < dataSelect.length; i++) {
     dataSelect[i].addEventListener('click', function () {
+      console.log('photographer.js/ ->dataset filter addEventlistener');
+
       const dataValue = dataSelect[i].dataset.select;
       pSort.textContent = selectOptions[dataValue];
       pSort.style.color = '#fff';
       selectMenu.classList.remove('show');
-
-      console.log(dataValue);
-      console.log(typeof dataValue);
-
-      localStorage.setItem('choice', dataValue);
-      const value = localStorage.getItem('choice');
-      console.log(localStorage);
-
-      init(value);
-      console.log('je suis revenu');
+      getJsonDataPhotographers().then((data) => {
+        const media = data.media;
+        const photographers = data.photographers;
+        displayMedia(media, photographers, idPhotographer, dataValue);
+      });
     });
   }
-  localStorage.getItem('choice');
-  console.log(localStorage);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////s
 /////////////Listes photos
-//   const listPhotos = document.querySelectorAll('.list-photos');
-//   const modalConteneur = document.getElementById('contact_modal');
-//   const modal = document.querySelector('.modal');
-//   const modalForm = modalConteneur.getElementsByTagName('form')[0];
-//   // const titre = modalConteneur.getElementsByTagName('h2')[0];
-//   const title = document.querySelector('.modal-photographer');
+const listPhotos = document.querySelectorAll('.list-photos');
+const modalConteneur = document.getElementById('contact_modal');
+const modal = document.querySelector('.modal');
 
-//   for (let i = 0; i < listPhotos.length; i++) {
-//     listPhotos[i].addEventListener('click', function () {
-//       const id = listPhotos[i].dataset.id;
-//       localStorage.setItem('id', id);
-//       modalConteneur.style.display = 'block';
-//       modalForm.style.display = 'none';
-//       title.style.display = 'none';
-//       getMediaData();
-//       // modalConteneur.style.backgroundColor = '#fff';
-//       // titre.innerHTML = '';
-
-//       // const img = document.createElement('img');
-//       // img.src = listPhotos[i].src;
-//       // modalConteneur.appendChild(img);
-//       // const image = modalConteneur.getElementsByTagName('img')[0];
-//       // image.style.width = '90%';
-//       // image.style.height = '90%';
-//     });
-//   }
-//   async function getMediaData() {}
-//   const { media } = await getJsonDataPhotographers();
-
-//   // const mediaSection = document.querySelector('.modal');
-//   const selectPhoto = localStorage.getItem('id');
-//   const mediaModel = mediaFactory(media);
-//   const mediaCarrouselDOM = mediaModel.getMediaCarrouselDOM(media, selectPhoto);
-//   modalConteneur.appendChild(mediaCarrouselDOM);
-//   console.log(media);
-// }
-
-//////
-// });
-// //Faire un tri selon l'optionSelect reçu
-// // Tri des Likes par ordre croissant
-// const choice = localStorage.getItem('choice');
-// console.log(choice);
-// let newMedia;
-
-// switch (selectDisplayOption) {
-//   case '1':
-//     newMedia = mediaPhotographer.sort((a, b) => b.likes - a.likes);
-//     break;
-//   case '2':
-//     newMedia = mediaPhotographer.sort((a, b) => b.dates - a.dates);
-//     break;
-//   case '3':
-//     newMedia = mediaPhotographer.sort((a, b) =>
-//       a.title.localeCompare(b.title)
-//     );
-//     break;
-//   default:
-//     newMedia = mediaPhotographer;
-// }
-// console.log(newMedia);
+for (let i = 0; i < listPhotos.length; i++) {
+  listPhotos[i].addEventListener('click', function () {
+    console.log('photographer.js/ ->listPhoto[i] addEventlistener');
+    const id = listPhotos[i].dataset.id;
+    console.log(id);
+    getJsonDataPhotographers().then((data) => {
+      const media = data.media;
+      getCarrousel(media, id);
+    });
+  });
+}

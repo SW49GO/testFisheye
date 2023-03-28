@@ -1,4 +1,4 @@
-console.log('index.js');
+console.log('lancement du fichier index.js');
 
 async function getJsonDataPhotographers() {
   console.log('index.js ->getJsonDataPhotographers');
@@ -36,7 +36,7 @@ async function getPhotograperById(photographers, id) {
   const personalPhotographer = photographers.filter(
     (user) => user.id === parseInt(id)
   );
-  console.log(personalPhotographer);
+  // console.log(personalPhotographer);
   return personalPhotographer;
 }
 /**
@@ -46,16 +46,19 @@ async function getPhotograperById(photographers, id) {
  * @returns
  */
 async function getMediaById(media, id) {
+  console.log(media);
   console.log('index.js->getMediaById(media,id)');
   const mediaPhotographer = media.filter(
     (medias) => medias.photographerId === parseInt(id)
   );
-  console.log(mediaPhotographer);
+  // console.log(mediaPhotographer);
   return mediaPhotographer;
 }
 async function getMediaFilter(media, id, selectFilter) {
+  console.log('index.js-> getMediaFilter(media, id, selectFilter)');
+
   const medias = await getMediaById(media, id);
-  console.log(medias);
+  // console.log(medias);
   let mediaFilter;
   switch (selectFilter) {
     case '1':
@@ -70,7 +73,7 @@ async function getMediaFilter(media, id, selectFilter) {
     default:
       mediaFilter = medias;
   }
-  console.log(mediaFilter);
+  // console.log(mediaFilter);
   return mediaFilter;
 }
 /**
@@ -118,19 +121,21 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
     idPhotographer
   );
 
-  console.log(personalPhotographer);
+  // console.log(personalPhotographer);
 
   const numbLikes = media
     .filter((media) => media.photographerId === parseInt(idPhotographer))
     .map((listLike) => listLike.likes)
     .reduce((acc, value) => acc + value);
 
-  console.log(typeof numbLikes);
+  // console.log(typeof numbLikes);
 
   const personalData = { photographer: personalPhotographer[0] };
   const pagePhotgrapher = photographerFactory(personalData);
   const pageCardDOM = pagePhotgrapher.getPagePhotographerDOM(numbLikes);
-  mediaSection.appendChild(pageCardDOM);
+  if (pageCardDOM != null) {
+    mediaSection.appendChild(pageCardDOM);
+  }
 }
 
 /**
@@ -147,12 +152,13 @@ async function displayMedia(
   idPhotographer,
   selectFilter
 ) {
+  console.log(photographers);
   const mediaPhotographer = await getMediaById(
     media,
     idPhotographer,
     selectFilter
   );
-  console.log(mediaPhotographer);
+  // console.log(mediaPhotographer);
   console.log('index.js->displaymedia');
   const mediaImage = document.querySelector('.list-images');
   mediaImage.innerHTML = '';
@@ -166,7 +172,7 @@ async function displayMedia(
     idPhotographer,
     selectFilter
   );
-  console.log(newMedia);
+  // console.log(newMedia);
   const photographerData = {
     photographer: personalPhotographer,
     media: newMedia,
@@ -175,7 +181,16 @@ async function displayMedia(
   const mediaCardDOM = mediaModel.getMediaCardDOM();
   mediaImage.appendChild(mediaCardDOM);
 }
+async function getCarrousel(media, selectPhoto) {
+  console.log(selectPhoto);
+  const modal = document.getElementById('contact_modal');
+  modal.innerHTML = '';
+  console.log(modal);
+  const mediaModel = mediaFactory(media);
+  const mediaCarrouselDOM = mediaModel.getMediaCarrouselDOM(selectPhoto);
 
+  modal.appendChild(mediaCarrouselDOM);
+}
 /**
  * Function to initialize all display
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
@@ -197,6 +212,7 @@ async function init(selectFilter = '') {
     displayMedia(media, photographers, idPhotographer, selectFilter);
     const name = await getNamePhotographer(photographers, idPhotographer);
     getPhotographerName(name);
+    getCarrousel(media, selectFilter);
   }
 }
 init();

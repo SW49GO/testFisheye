@@ -1,12 +1,8 @@
 function displayModal() {
   const modal = document.getElementById('contact_modal');
-  const modalInside = document.getElementsByTagName('form')[0];
-  const title = document.querySelector('.modal-photographer');
   const main = document.getElementById('main');
   const header = document.getElementsByTagName('header');
   modal.style.display = 'block';
-  modalInside.style.display = 'block';
-  title.style.display = 'block';
   main.style.opacity = 0.5;
   header[0].style.opacity = 0.5;
 }

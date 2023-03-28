@@ -43,9 +43,12 @@ function photographerFactory(data) {
    */
   function getPagePhotographerDOM(numbLikes) {
     console.log('factories/photographer.js->getPagePhotographerDOM');
-    const article = document.createElement('article');
-    article.className = 'photographer-header-article';
-    article.innerHTML = `<div class="photographer-identity">
+    const verif = document.querySelector('.photographer-header-article');
+    console.log(verif);
+    if (!verif) {
+      const article = document.createElement('article');
+      article.className = 'photographer-header-article';
+      article.innerHTML = `<div class="photographer-identity" data-identity="${id}">
                             <div  aria-label="Localisation, slogan et tarifs du photographe ${name}">
                               <h2 class="name-photographer">${name}</h2>
                               <h3>${city}, ${country}</h3> 
@@ -76,7 +79,9 @@ function photographerFactory(data) {
                             <p class="price">${price}€/jour</p>
                           </div>
                       `;
-    return article;
+      return article;
+    }
+    return null;
   }
 
   return { getUserCardDOM, getPagePhotographerDOM };

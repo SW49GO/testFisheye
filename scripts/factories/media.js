@@ -15,14 +15,14 @@
  */
 function mediaFactory(data) {
   console.log('factories/media.js');
-  console.log(data);
+  // console.log(data);
 
   function getMediaCardDOM() {
     console.log('factories/media.js->getMediaCardDOM');
     const { name } = data.photographer[0];
     // console.log(name);
 
-    console.log(data.media[0]);
+    // console.log(data.media[0]);
     const path = name.split(' ')[0];
     const article = document.createElement('article');
     article.className = 'list-article';
@@ -53,9 +53,63 @@ function mediaFactory(data) {
     console.log(selectPhoto);
 
     const article = document.createElement('article');
-    article.innerHTML = `<p>${selectPhoto}</p>`;
+    article.innerHTML = `<p>Photo n° : ${selectPhoto}</p>`;
     return article;
   }
 
   return { getMediaCardDOM, getMediaCarrouselDOM };
 }
+
+//  <ul class="carousel" aria-label="Our selection of Recipes">
+//      <li class="carousel-item item-0" aria-hidden="false">
+//          <div role="button" class="controls controls-left">
+//              <span class="img prev-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-left"></i>
+//              </span>
+//              <p class="sr-only">Previous</p>
+//          </div>
+//          <div role="button" class="controls controls-right">
+//              <span class="img next-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-right"></i>
+//              </span>
+//              <p class="sr-only">Next</p>
+//          </div>
+//          <div class="caroussel-title">
+//              <h2>Item 1</h2>
+//          </div>
+//      </li>
+//      <li class="carousel-item item-1" aria-hidden="true">
+//          <div role="button" class="controls controls-left">
+//              <span class="img prev-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-left"></i>
+//              </span>
+//              <p class="sr-only">Previous</p>
+//          </div>
+//          <div role="button" class="controls controls-right">
+//              <span class="img next-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-right"></i>
+//              </span>
+//              <p class="sr-only">Next</p>
+//          </div>
+//          <div class="caroussel-title">
+//              <h2>Item 2</h2>
+//          </div>
+//      </li>
+//      <li class="carousel-item item-2" aria-hidden="true">
+//          <div role="button" class="controls controls-left">
+//              <span class="img prev-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-left"></i>
+//              </span>
+//              <p class="sr-only">Previous</p>
+//          </div>
+//          <div role="button" class="controls controls-right">
+//              <span class="img next-image">
+//                  <i aria-hidden="true" class="fa fa-arrow-circle-right"></i>
+//              </span>
+//              <p class="sr-only">Next</p>
+//          </div>
+//          <div class="caroussel-title">
+//              <h2>Item 3</h2>
+//          </div>
+//      </li>
+//  </ul>
