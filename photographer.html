@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/d89d263f02.js" crossorigin="anonymous"></script>
+  <title>Fisheye - photographe </title>
+</head>
+
+<body>
+  <header>
+    <a href="index.html">
+      <img src="assets/images/logo.png" class="logo" alt="Fisheye Lien vers la page d'accueil">
+    </a>
+  </header>
+  <main id="main">
+    <!-- <button class="contact_button" onclick="displayModal()">Contactez-moi</button> -->
+    <section class="photograph-header">
+    </section>
+  </main>
+  <div id="contact_modal">
+    <div class="modal">
+      <header>
+        <h2 class="modal-photographer">Contactez-moi</h2>
+        <img src="assets/icons/close.svg" onclick="closeModal()">
+      </header>
+      <!-- <form action="" method="GET" onsubmit="return validate()"> -->
+      <form>
+        <div>
+          <label for="firsname">Prénom</label>
+          <input type="text" name="firsname" id="firsname" required>
+          <label for="lastname">Nom</label>
+          <input type="text" name="lastname" id="lastname" required>
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required>
+          <label for="message">Votre message</label>
+          <input type="text" name="message" id="message" required>
+        </div>
+        <button type="submit" class="contact_button" onclick="validateForm()">Envoyer</button>
+      </form>
+    </div>
+  </div>
+  <script src="scripts/factories/media.js"></script>
+  <script src="scripts/factories/photographer.js"></script>
+  <script src="scripts/pages/index.js"></script>
+
+  <script src="scripts/utils/contactForm.js"></script>
+
+  <!-- Différer le chargement de "scripts/pages/photographer.js"-->
+  <!-- <script src="scripts/pages/photographer.js"></script> -->
+  <script type="text/javascript">
+    function waitLoad() {
+      const element = document.createElement("script");
+      element.src = "scripts/pages/photographer.js";
+      document.body.appendChild(element);
+    }
+    if (window.addEventListener)
+      window.addEventListener("load", waitLoad, false);
+    else if (window.addEventListener)
+      window.addEventListener("onload", waitLoad);
+    else window.onload = waitLoad;
+  </script>
+</body>
+
+</html>
