@@ -45,28 +45,35 @@ if (btnSort != null) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion des Likes
 const sectionPhotograph = document.querySelector('.photograph-header');
-const likes = document.querySelector('.likes');
-const tab = []; // Pour le stockage des data-ref des Images
+const encart = document.querySelector('.likes');
+const tabRef = []; // Pour le stockage des data-ref des Images
 if (sectionPhotograph != null) {
   sectionPhotograph.addEventListener('click', function (event) {
-    const target = event.target;
-    let totalLikes = likes.textContent;
-    console.log(totalLikes);
-    if (event.target.classList.contains('number-likes')) {
+    if (event.target.classList.contains('btn-filter')) {
+      return;
+    }
+    if (event.target.classList.contains('icon-likes')) {
+      const target = event.target;
+      let totalLikesEncart = parseInt(encart.textContent);
+      let theNumberLikes = event.target.parentNode.textContent;
+      const parentLikes = event.target.parentNode;
       const refNumber = target.dataset.ref;
-      if (tab.includes(refNumber)) {
-        //Utilisateur a déjà liké
-        totalLikes = parseInt(totalLikes) - 1;
-        likes.innerHTML = `${totalLikes}<i class="fa-solid fa-heart"></i>`;
-        const index = tab.indexOf(refNumber);
-        tab.splice(index, 1);
+
+      if (tabRef.includes(refNumber)) {
+        // Si l'utilisateur a déjà aimé
+        const index = tabRef.indexOf(refNumber);
+        tabRef.splice(index, 1);
+        totalLikesEncart--;
+        theNumberLikes--;
       } else {
-        //Utilisateur n'a pas liké
-        totalLikes = parseInt(totalLikes) + 1;
-        likes.innerHTML = `${totalLikes}<i class="fa-solid fa-heart"></i>`;
-        tab.push(refNumber);
+        // Si l'utilisateur n'a pas encore aimé
+        tabRef.push(refNumber);
+        totalLikesEncart++;
+        theNumberLikes++;
       }
-      console.log(tab);
+
+      encart.innerHTML = `${totalLikesEncart}<i class="fa-solid fa-heart"></i>`;
+      parentLikes.innerHTML = `${theNumberLikes}<i data-ref="${refNumber}" class="fa-solid fa-heart icon-likes"></i>`;
     }
   });
 }

@@ -45,7 +45,7 @@ function mediaFactory(data) {
                                  </a>
                                 <figcaption class="list-photos-description">
                                 <p>${data.media[i].title}</p>
-                                <p class="number-likes" data-ref="${data.media[i].id}">${data.media[i].likes}<i data-ref="${data.media[i].id}" class="fa-solid fa-heart number-likes"></i></p>
+                                <p class="number-likes"">${data.media[i].likes}<i data-ref="${data.media[i].id}" class="fa-solid fa-heart icon-likes"></i></p>
                                 </figcaption>
                               </div>`;
       }
