@@ -28,10 +28,10 @@
         <img src="assets/icons/close.svg" onclick="closeModal()">
       </header>
       <!-- <form action="" method="GET" onsubmit="return validate()"> -->
-      <form class="modal-form">
+      <form class="modal-form" novalidate>
         <div>
-          <label for="firsname">Prénom</label>
-          <input type="text" name="firsname" id="firsname" required>
+          <label for="firstname">Prénom</label>
+          <input type="text" name="firsname" id="firstname" required>
           <label for="lastname">Nom</label>
           <input type="text" name="lastname" id="lastname" required>
           <label for="email">Email</label>
@@ -39,7 +39,7 @@
           <label for="message">Votre message</label>
           <input type="text" name="message" id="message" required>
         </div>
-        <button type="submit" class="contact_button" onclick="validateForm()">Envoyer</button>
+        <button type="submit" class="contact_button">Envoyer</button>
       </form>
     </div>
   </div>

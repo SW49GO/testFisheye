@@ -5,21 +5,6 @@ console.log('pages/photographers.js');
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Appartition du sous-menu
 
-// document.body.addEventListener('click', function (event) {
-//   if (event.target.className == 'btn-filter') {
-//     menuFilter();
-//   }
-//   if (event.target.className == 'number-likes') {
-//     checkLikes();
-//   }
-//   if (event.target.className == 'list-photos') {
-//     selectPhotoLightBox();
-//   }
-//   if (event.target.className == 'select-menu-item') {
-//     checkFilter();
-//   }
-// });
-
 console.log('menuFilter');
 const btnSort = document.querySelector('.btn-filter');
 if (btnSort != null) {
@@ -125,4 +110,24 @@ if (photographer != null) {
       });
     });
   }
+}
+
+//////////////////////////////////////////////////////////////////////
+///// Soumission du formulaire
+const form = document.querySelector('.modal-form');
+if (form != null) {
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    console.log(
+      'Votre prénom : ' +
+        event.target.firstname.value +
+        '\nVotre nom : ' +
+        event.target.lastname.value +
+        '\nVotre adresse Email : ' +
+        event.target.email.value +
+        '\nVotre message : ' +
+        event.target.message.value
+    );
+    closeModal();
+  });
 }
