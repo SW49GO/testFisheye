@@ -1,19 +1,31 @@
 //Mettre le code JavaScript lié à la page photographer.html
-// document.addEventListener('DOMContentLoaded', function () {
-console.log('pages/photographers.js');
 
-// const photographHeader = document.querySelector('.photograph-header');
-// console.log(photographHeader);
-// console.log(photographHeader.querySelector('.photographer-header-article'));
+console.log('pages/photographers.js');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Appartition du sous-menu
+
+// document.body.addEventListener('click', function (event) {
+//   if (event.target.className == 'btn-filter') {
+//     menuFilter();
+//   }
+//   if (event.target.className == 'number-likes') {
+//     checkLikes();
+//   }
+//   if (event.target.className == 'list-photos') {
+//     selectPhotoLightBox();
+//   }
+//   if (event.target.className == 'select-menu-item') {
+//     checkFilter();
+//   }
+// });
+
+console.log('menuFilter');
 const btnSort = document.querySelector('.btn-filter');
-// console.log(btnSort);
 if (btnSort != null) {
   const selectMenu = document.querySelector('.select-menu');
-  const spanSort = btnSort.getElementsByTagName('span')[0];
-  const pSort = btnSort.getElementsByTagName('p')[0];
+  const spanSort = btnSort.querySelector('.like-filter');
+  const pSort = btnSort.querySelector('.txt-filter');
 
   btnSort.addEventListener('click', function () {
     console.log('photographer.js/ ->btnSord addEventlistener');
@@ -30,79 +42,38 @@ if (btnSort != null) {
     }
   });
 }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion des Likes
-const numberLikes = document.querySelectorAll('.number-likes');
+const sectionPhotograph = document.querySelector('.photograph-header');
 const likes = document.querySelector('.likes');
-
-if (likes != null && numberLikes) {
-  const dataSelect = document.querySelectorAll('.select-menu-item');
-  const selectMenu = document.querySelector('.select-menu');
-  const pSort = btnSort.getElementsByTagName('p')[0];
-  const likesValue = parseInt(likes.childNodes[0].nodeValue.trim());
-  const initialLike = Array.from(numberLikes).map(() => 0);
-
-  console.log(initialLike);
-
-  numberLikes.forEach((elt, index) => {
-    elt.addEventListener('click', function () {
-      console.log('photographer.js/ ->numberLikes addEventlistener');
-
-      if (initialLike[index] === 0) {
-        // Si le like était à 0, on l'incrémente en l'initialisant à 1
-        initialLike[index] = 1;
-        const userLike = parseInt(elt.childNodes[0].nodeValue) + 1;
-        numberLikes[
-          index
-        ].innerHTML = `${userLike}<i class="fa-solid fa-heart"></i>`;
+const tab = []; // Pour le stockage des data-ref des Images
+if (sectionPhotograph != null) {
+  sectionPhotograph.addEventListener('click', function (event) {
+    const target = event.target;
+    let totalLikes = likes.textContent;
+    console.log(totalLikes);
+    if (event.target.classList.contains('number-likes')) {
+      const refNumber = target.dataset.ref;
+      if (tab.includes(refNumber)) {
+        //Utilisateur a déjà liké
+        totalLikes = parseInt(totalLikes) - 1;
+        likes.innerHTML = `${totalLikes}<i class="fa-solid fa-heart"></i>`;
+        const index = tab.indexOf(refNumber);
+        tab.splice(index, 1);
       } else {
-        // Sinon, on le décrémente en laissant la valeur initial à 0
-        initialLike[index] = 0;
-        const userLike = parseInt(elt.childNodes[0].nodeValue) - 1;
-        numberLikes[
-          index
-        ].innerHTML = `${userLike}<i class="fa-solid fa-heart"></i>`;
+        //Utilisateur n'a pas liké
+        totalLikes = parseInt(totalLikes) + 1;
+        likes.innerHTML = `${totalLikes}<i class="fa-solid fa-heart"></i>`;
+        tab.push(refNumber);
       }
-      const totalLikes =
-        likesValue + initialLike.reduce((acc, value) => acc + value, 0);
-      likes.innerHTML = `${totalLikes} <span>&hearts;<span></span>`;
-    });
+      console.log(tab);
+    }
   });
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  // Tri selon la selection
-  const selectOptions = {
-    1: 'Popularité',
-    2: 'Date',
-    3: 'Titre',
-  };
-  // Id du Photographe
-  const photographer = document.querySelector('.photographer-identity');
-  const idPhotographer = photographer.dataset.identity;
-  console.log(idPhotographer);
-  for (let i = 0; i < dataSelect.length; i++) {
-    dataSelect[i].addEventListener('click', function () {
-      console.log('photographer.js/ ->dataset filter addEventlistener');
-
-      const dataValue = dataSelect[i].dataset.select;
-      pSort.textContent = selectOptions[dataValue];
-      pSort.style.color = '#fff';
-      selectMenu.classList.remove('show');
-      getJsonDataPhotographers().then((data) => {
-        const media = data.media;
-        const photographers = data.photographers;
-        displayMedia(media, photographers, idPhotographer, dataValue);
-      });
-    });
-  }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////s
-/////////////Listes photos
-const listPhotos = document.querySelectorAll('.list-photos');
-const modalConteneur = document.getElementById('contact_modal');
-const modal = document.querySelector('.modal');
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////Listes photos  -> selection d'un photo et envoi lightBox
 
+const listPhotos = document.querySelectorAll('.list-photos');
 for (let i = 0; i < listPhotos.length; i++) {
   listPhotos[i].addEventListener('click', function () {
     console.log('photographer.js/ ->listPhoto[i] addEventlistener');
@@ -110,7 +81,41 @@ for (let i = 0; i < listPhotos.length; i++) {
     console.log(id);
     getJsonDataPhotographers().then((data) => {
       const media = data.media;
-      getCarrousel(media, id);
+      getCaroussel(media, id);
     });
   });
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+///////////Selection et affichage du Filtre
+const selectOptions = {
+  1: 'Popularité',
+  2: 'Date',
+  3: 'Titre',
+};
+
+// console.log(id);
+const dataSelect = document.querySelectorAll('.select-menu-item');
+const photographer = document.querySelector('.photographer-identity');
+if (photographer != null) {
+  const id = photographer.dataset.identity;
+
+  for (let i = 0; i < dataSelect.length; i++) {
+    dataSelect[i].addEventListener('click', function () {
+      console.log('photographer.js/ ->dataset filter addEventlistener');
+
+      const dataValue = dataSelect[i].dataset.select;
+      const pSort = btnSort.querySelector('.txt-filter');
+      const selectMenu = document.querySelector('.select-menu');
+      pSort.textContent = selectOptions[dataValue];
+      pSort.style.color = '#fff';
+      selectMenu.classList.remove('show');
+
+      getJsonDataPhotographers().then((data) => {
+        const media = data.media;
+        const photographers = data.photographers;
+        displayMedia(media, photographers, id, dataValue);
+      });
+    });
+  }
 }
