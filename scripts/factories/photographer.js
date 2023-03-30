@@ -64,7 +64,7 @@ function photographerFactory(data) {
                           <div class="select-sort" aria-label="Tri des images selon la popularité, la date ou le titre">
                             <p>Trier par </p>
                             <div class="dropdown">
-                              <button class="btn-filter" type="button" tabindex="3" ><p class="txt-filter"></p><span class="like-filter"><i class="fa-solid fa-chevron-down"></i></span></button>
+                              <button class="btn-filter" type="button" tabindex="3" ><p class="txt-filter"></p><span class="chevron-filter"><i class="fa-solid fa-chevron-down"></i></span></button>
                               <ul class="select-menu">
                                 <li class="select-menu-item" data-select="1">Populartié</li><hr>
                                 <li class="select-menu-item" data-select="2">Date</li><hr>

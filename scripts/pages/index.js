@@ -46,7 +46,6 @@ async function getPhotograperById(photographers, id) {
  * @returns
  */
 async function getMediaById(media, id) {
-  console.log(media);
   console.log('index.js->getMediaById(media,id)');
   const mediaPhotographer = media.filter(
     (medias) => medias.photographerId === parseInt(id)
@@ -54,13 +53,13 @@ async function getMediaById(media, id) {
   // console.log(mediaPhotographer);
   return mediaPhotographer;
 }
-async function getMediaFilter(media, id, selectFilter) {
-  console.log('index.js-> getMediaFilter(media, id, selectFilter)');
+async function getMediaFilter(media, id, options) {
+  console.log('index.js-> getMediaFilter(media, id, options)');
 
   const medias = await getMediaById(media, id);
   // console.log(medias);
   let mediaFilter;
-  switch (selectFilter) {
+  switch (options) {
     case '1':
       mediaFilter = medias.sort((a, b) => b.likes - a.likes);
       break;
@@ -146,18 +145,9 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
  * @param {string} idPhotographer
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
  */
-async function displayMedia(
-  media,
-  photographers,
-  idPhotographer,
-  selectFilter
-) {
+async function displayMedia(media, photographers, idPhotographer, options) {
   console.log(photographers);
-  const mediaPhotographer = await getMediaById(
-    media,
-    idPhotographer,
-    selectFilter
-  );
+  const mediaPhotographer = await getMediaById(media, idPhotographer, options);
   // console.log(mediaPhotographer);
   console.log('index.js->displaymedia');
   const mediaImage = document.querySelector('.list-images');
@@ -170,7 +160,7 @@ async function displayMedia(
   const newMedia = await getMediaFilter(
     mediaPhotographer,
     idPhotographer,
-    selectFilter
+    options
   );
   // console.log(newMedia);
   const photographerData = {
@@ -180,33 +170,32 @@ async function displayMedia(
   const mediaModel = mediaFactory(photographerData);
   const mediaCardDOM = mediaModel.getMediaCardDOM();
   mediaImage.appendChild(mediaCardDOM);
-
-  // const numberLikes = document.querySelectorAll('.number-likes');
-  // for (let i = 0; i < numberLikes.length; i++) {
-  //   numberLikes[i].addEventListener('click', function () {
-  //     console.log('like');
-  //   });
-  // }
 }
 
-async function getCaroussel(media, selectPhoto) {
-  console.log(selectPhoto);
+async function displayLightBox(
+  media,
+  photographers,
+  selectPhoto,
+  idPhotographer
+) {
+  console.log('index.js->displayLightBox');
+  const mediaPhotographer = await getMediaById(media, idPhotographer);
+  const name = await getNamePhotographer(photographers, idPhotographer);
+
   const modal = document.querySelector('.modal');
 
   console.log(modal);
-  const mediaModel = mediaFactory(media);
-  const mediaCarousselDOM = mediaModel.getMediaCarousselDOM(selectPhoto);
-  console.log('mediacarousel ' + mediaCarousselDOM);
-  if (mediaCarousselDOM != null) {
-    modal.innerHTML = '';
-    modal.appendChild(mediaCarousselDOM);
+  const mediaModel = mediaFactory(mediaPhotographer);
+  const mediaLightBoxDOM = mediaModel.getLightBoxDOM(selectPhoto, name);
+  if (mediaLightBoxDOM != null) {
+    modal.appendChild(mediaLightBoxDOM);
   }
 }
 /**
  * Function to initialize all display
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
  */
-async function init(selectFilter = '') {
+async function init(options = '') {
   console.log('index.js->init');
   const { media, photographers } = await getJsonDataPhotographers();
 
@@ -220,10 +209,10 @@ async function init(selectFilter = '') {
     getPhotograperById(photographers, idPhotographer);
     getMediaById(media, idPhotographer);
     displayDataPhotographer(media, photographers, idPhotographer);
-    displayMedia(media, photographers, idPhotographer, selectFilter);
+    displayMedia(media, photographers, idPhotographer, options);
     const name = await getNamePhotographer(photographers, idPhotographer);
     getPhotographerName(name);
-    getCaroussel(media, selectFilter);
+    displayLightBox(media, photographers, options, idPhotographer);
   }
 }
 init();

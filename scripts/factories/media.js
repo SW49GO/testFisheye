@@ -28,15 +28,16 @@ function mediaFactory(data) {
     article.className = 'list-article';
 
     for (let i = 0; i < data.media.length; i++) {
-      // const likes = document.createElement('p');
-      // likes.className = 'number-likes';
-      // likes.textContent = `${data.media[i].likes}`;
       const images = data.media[i].image
         ? `<img class="list-photos" data-id="${data.media[i].id}" src="assets/photographers/${path}/${data.media[i].image}" alt="${data.media[i].title}"></img>`
-        : `<video class="list-photos" data-id="${data.media[i].id}" controls width="100"  aria-label="${data.media[i].title}">
+        : `<video class="video list-photos" data-id="${data.media[i].id}" aria-label="Vidéo : ${data.media[i].title}">
                                       <source src="assets/photographers/${path}/${data.media[i].video}" type="video/mp4" >
                                     </video>`;
+      const title = data.media[i].video
+        ? `<p><i class="fa-solid fa-video" title="Vidéo"></i> ${data.media[i].title}</p>`
+        : `<p>${data.media[i].title}</p>`;
       if (images) {
+        console.log(images);
         article.innerHTML += `<div class="list-photos-photographer">
                                 <a href="#">
                                   <figure class="list-photos-conteneur">
@@ -44,35 +45,53 @@ function mediaFactory(data) {
                                   </figure>
                                  </a>
                                 <figcaption class="list-photos-description">
-                                <p>${data.media[i].title}</p>
+                                  ${title}
                                 <p class="number-likes"">${data.media[i].likes}<i data-ref="${data.media[i].id}" class="fa-solid fa-heart icon-likes"></i></p>
                                 </figcaption>
                               </div>`;
       }
-      // article.appendChild(likes);
     }
 
     return article;
   }
-  function getMediaCarousselDOM(selectPhoto) {
-    console.log('factories/media.js->getMediaCarrouselDOM');
-    console.log('selectionPhoto' + typeof selectPhoto);
+  function getLightBoxDOM(selectPhoto, name) {
+    console.log('factories/media.js->getLightBoxDOM');
+    console.log('selectionPhoto' + selectPhoto);
+    const path = name[0].split(' ')[0];
+    console.log(path);
     const modal = document.getElementById('contact_modal');
     const form = document.querySelector('.modal-form');
-    console.log(form);
+    // Déterminer de quel média il s'agit
+    const formatPhoto = data
+      .filter((photo) => photo.id == selectPhoto)
+      .map((format) => format.image);
+    const formatVideo = data
+      .filter((photo) => photo.id == selectPhoto)
+      .map((format) => format.video);
+    // Rendu suivant le media
+    let displayMedia;
+    if (formatPhoto[0]) {
+      displayMedia = `<img class="list-photos" src="assets/photographers/${path}/${formatPhoto[0]}" alt="photo sélectionnée">`;
+    } else if (formatVideo[0]) {
+      displayMedia = `<video class="video list-photos" controls width="100"aria-label="Vidéo : ${formatVideo[0]}">
+                                      <source src="assets/photographers/${path}/${formatVideo[0]}" type="video/mp4" >
+                                    </video>`;
+    }
+
     if (selectPhoto != '') {
       modal.style.display = 'block';
       if (form != null) {
         form.style.display = 'none';
       }
       const article = document.createElement('article');
-      article.innerHTML += `<p class="caroussel">Photo n° : ${selectPhoto}</p><img src="assets/icons/close.svg" onclick="closeModal()">`;
+      article.className = 'caroussel';
+      article.innerHTML = displayMedia;
       return article;
     }
     return null;
   }
 
-  return { getMediaCardDOM, getMediaCarousselDOM };
+  return { getMediaCardDOM, getLightBoxDOM };
 }
 ////Caroussel du cours !!!
 //////////////////////////
