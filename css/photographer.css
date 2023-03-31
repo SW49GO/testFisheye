@@ -222,10 +222,14 @@ hr {
 .show {
   display: block;
 }
-.caroussel {
+/* .ligthBox {
   position: relative;
   width: 18.75rem;
   height: 18.75rem;
   border: 0.0625rem solid black;
-}
+} */
 /***********************************************************************/
+.conteneurImage {
+  width: 20rem;
+  height: 20rem;
+}

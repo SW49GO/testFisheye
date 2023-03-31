@@ -76,21 +76,24 @@ function mediaFactory(data) {
     // Rendu suivant le media
     let displayMedia;
     if (formatPhoto[0]) {
-      displayMedia = `<img class="list-photos" src="assets/photographers/${path}/${formatPhoto[0]}" alt="photo sélectionnée">`;
+      displayMedia = `<div class="conteneurImage"><img class="list-photos" src="assets/photographers/${path}/${formatPhoto[0]}" alt="photo sélectionnée"></div>`;
     } else if (formatVideo[0]) {
-      displayMedia = `<video class="video list-photos" controls width="100"aria-label="Vidéo : ${formatVideo[0]}">
+      displayMedia = `<div class="conteneurImage"><video class="video list-photos" controls width="100"aria-label="Vidéo : ${formatVideo[0]}">
                                       <source src="assets/photographers/${path}/${formatVideo[0]}" type="video/mp4" >
                                       <track kind="subtitles" src="assets/photographers/${path}/test.vtt" srclang="fr">
-                                    </video>`;
+                                    </video></div>`;
     }
 
     if (selectPhoto != '') {
-      modal.style.display = 'block';
-      if (form != null) {
-        form.style.display = 'none';
-      }
+      // modal.style.display = 'block';
+      // if (form != null) {
+      //   form.style.left = '-3.12rem';
+      // }
       const article = document.createElement('article');
-      article.className = 'caroussel';
+      article.className = 'lightBox';
+      article.style.position = 'relative';
+      article.style.top = '0';
+      article.style.order = '1';
       article.innerHTML = displayMedia;
       return article;
     }

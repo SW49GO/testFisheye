@@ -120,7 +120,7 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
 
   // console.log(personalPhotographer);
 
-  const numbLikes = media
+  const numbLikesEncart = media
     .filter((media) => media.photographerId === parseInt(idPhotographer))
     .map((listLike) => listLike.likes)
     .reduce((acc, value) => acc + value);
@@ -129,7 +129,7 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
 
   const personalData = { photographer: personalPhotographer[0] };
   const pagePhotgrapher = photographerFactory(personalData);
-  const pageCardDOM = pagePhotgrapher.getPagePhotographerDOM(numbLikes);
+  const pageCardDOM = pagePhotgrapher.getPagePhotographerDOM(numbLikesEncart);
   mediaSection.appendChild(pageCardDOM);
 
   const btnFilter = document.querySelector('.btn-filter');
@@ -183,14 +183,23 @@ async function displayMedia(media, photographers, idPhotographer, options) {
   const mediaCardDOM = mediaModel.getMediaCardDOM();
   console.log(mediaCardDOM);
   mediaImage.appendChild(mediaCardDOM);
-  const numberLikes = document.querySelectorAll('.number-likes');
 
   // Initialisation d'un tableau pour le stockage des data-ref des Likes des Photos
   // Ecouteur d'évèement sur chaque icône Like et appelle de la fonction number() pour le traitement
+  const numberLikes = document.querySelectorAll('.number-likes');
   const tabRef = [];
   for (let i = 0; i < numberLikes.length; i++) {
     numberLikes[i].addEventListener('click', function () {
       number(numberLikes[i], tabRef);
+    });
+  }
+
+  // Gestionnaire d'évènement sur chaque photo
+  const listPhotos = document.querySelectorAll('.list-photos');
+  for (let i = 0; i < listPhotos.length; i++) {
+    listPhotos[i].addEventListener('click', function (e) {
+      e.preventDefault();
+      selectPhotoLightBox(listPhotos[i]);
     });
   }
 }
