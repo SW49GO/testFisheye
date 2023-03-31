@@ -15,7 +15,7 @@
  */
 function mediaFactory(data) {
   console.log('factories/media.js');
-  // console.log(data);
+  console.log(data);
 
   function getMediaCardDOM() {
     console.log('factories/media.js->getMediaCardDOM');
@@ -24,12 +24,17 @@ function mediaFactory(data) {
 
     // console.log(data.media[0]);
     const path = name.split(' ')[0];
+    const parentArticle = document.querySelector('.photograph-header');
+    const theLastArticle = document.querySelector('.list-article');
+    if (theLastArticle) {
+      parentArticle.removeChild(theLastArticle);
+    }
     const article = document.createElement('article');
     article.className = 'list-article';
 
     for (let i = 0; i < data.media.length; i++) {
       const images = data.media[i].image
-        ? `<img class="list-photos" data-id="${data.media[i].id}" src="assets/photographers/${path}/${data.media[i].image}" alt="${data.media[i].title}"></img>`
+        ? `<img class="list-photos" data-id="${data.media[i].id}" src="assets/photographers/${path}/${data.media[i].image}" alt="${data.media[i].title}" loading="lazy"></img>`
         : `<video class="video list-photos" data-id="${data.media[i].id}" aria-label="Vidéo : ${data.media[i].title}">
                                       <source src="assets/photographers/${path}/${data.media[i].video}" type="video/mp4" >
                                     </video>`;
@@ -37,7 +42,7 @@ function mediaFactory(data) {
         ? `<p><i class="fa-solid fa-video" title="Vidéo"></i> ${data.media[i].title}</p>`
         : `<p>${data.media[i].title}</p>`;
       if (images) {
-        console.log(images);
+        // console.log(images);
         article.innerHTML += `<div class="list-photos-photographer">
                                 <a href="#">
                                   <figure class="list-photos-conteneur">
@@ -75,6 +80,7 @@ function mediaFactory(data) {
     } else if (formatVideo[0]) {
       displayMedia = `<video class="video list-photos" controls width="100"aria-label="Vidéo : ${formatVideo[0]}">
                                       <source src="assets/photographers/${path}/${formatVideo[0]}" type="video/mp4" >
+                                      <track kind="subtitles" src="assets/photographers/${path}/test.vtt" srclang="fr">
                                     </video>`;
     }
 

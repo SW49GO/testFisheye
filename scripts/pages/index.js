@@ -105,16 +105,14 @@ async function displayDataIndex(photographers) {
 }
 
 /**
- * Function to display an article for one photographer for the page photographer.html
+ * Function to display an article for header photograph for the page photographer.html
  * construct from photographerFactory -> getPagePhotographerDOM
  * @param {object} media
  * @param {object} photographers
  */
 async function displayDataPhotographer(media, photographers, idPhotographer) {
   console.log('index.js->displayDataPhotographer');
-
   const mediaSection = document.querySelector('.photograph-header');
-
   const personalPhotographer = await getPhotograperById(
     photographers,
     idPhotographer
@@ -132,8 +130,21 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
   const personalData = { photographer: personalPhotographer[0] };
   const pagePhotgrapher = photographerFactory(personalData);
   const pageCardDOM = pagePhotgrapher.getPagePhotographerDOM(numbLikes);
-  if (pageCardDOM != null) {
-    mediaSection.appendChild(pageCardDOM);
+  mediaSection.appendChild(pageCardDOM);
+
+  const btnFilter = document.querySelector('.btn-filter');
+  console.log(btnFilter);
+  btnFilter.addEventListener('click', function () {
+    console.log('entrer addEventListener Index');
+    displayMenuFilter(btnFilter);
+  });
+  const selectMenuFilter = document.querySelectorAll('.select-menu-item');
+  for (let i = 0; i < selectMenuFilter.length; i++) {
+    selectMenuFilter[i].addEventListener('click', function () {
+      selectFilter(selectMenuFilter[i], btnFilter);
+      const selectedMenuFilter = document.querySelector('.select-menu');
+      selectedMenuFilter.classList.remove('show');
+    });
   }
 }
 
@@ -146,22 +157,23 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
  */
 async function displayMedia(media, photographers, idPhotographer, options) {
-  console.log(photographers);
-  const mediaPhotographer = await getMediaById(media, idPhotographer, options);
-  // console.log(mediaPhotographer);
+  console.log('trier par :' + options);
+
+  const mediaPhotographer = await getMediaById(media, idPhotographer);
+
   console.log('index.js->displaymedia');
-  const mediaImage = document.querySelector('.list-images');
-  mediaImage.innerHTML = '';
+
+  const mediaImage = document.querySelector('.photograph-header');
   const personalPhotographer = await getPhotograperById(
     photographers,
     idPhotographer
   );
-
   const newMedia = await getMediaFilter(
     mediaPhotographer,
     idPhotographer,
     options
   );
+  console.log(newMedia);
   // console.log(newMedia);
   const photographerData = {
     photographer: personalPhotographer,
@@ -169,7 +181,18 @@ async function displayMedia(media, photographers, idPhotographer, options) {
   };
   const mediaModel = mediaFactory(photographerData);
   const mediaCardDOM = mediaModel.getMediaCardDOM();
+  console.log(mediaCardDOM);
   mediaImage.appendChild(mediaCardDOM);
+  const numberLikes = document.querySelectorAll('.number-likes');
+
+  // Initialisation d'un tableau pour le stockage des data-ref des Likes des Photos
+  // Ecouteur d'évèement sur chaque icône Like et appelle de la fonction number() pour le traitement
+  const tabRef = [];
+  for (let i = 0; i < numberLikes.length; i++) {
+    numberLikes[i].addEventListener('click', function () {
+      number(numberLikes[i], tabRef);
+    });
+  }
 }
 
 async function displayLightBox(
@@ -209,7 +232,7 @@ async function init(options = '') {
     getPhotograperById(photographers, idPhotographer);
     getMediaById(media, idPhotographer);
     displayDataPhotographer(media, photographers, idPhotographer);
-    displayMedia(media, photographers, idPhotographer, options);
+    displayMedia(media, photographers, idPhotographer, (options = '1'));
     const name = await getNamePhotographer(photographers, idPhotographer);
     getPhotographerName(name);
     displayLightBox(media, photographers, options, idPhotographer);
