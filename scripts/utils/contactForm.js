@@ -1,44 +1,33 @@
 function displayModal(option) {
-  const modal = document.getElementById('contact_modal');
-  const main = document.getElementById('main');
-  const divModal = document.querySelector('.modal');
-  const lightBox = document.querySelector('.lightBox');
-  const header = document.getElementsByTagName('header');
-  const form = document.querySelector('.modal-form');
-  const title = document.querySelector('.modal-photographer');
-  // Positionnement de la modal
-  modal.style.left = '50%';
-  modal.style.transform = 'translateX(-50%)';
+  const modal = document.getElementById("contact_modal");
+  const main = document.getElementById("main");
+  const divModal = document.querySelector(".modal");
+  const divLightBox = document.querySelector(".lightBox");
+  const header = document.getElementsByTagName("header");
+  const form = document.querySelector(".modal-form");
+
   // Diminution de l'opacité de l'arrière plan
-  main.style.opacity = 0.5;
-  header[0].style.opacity = 0.5;
-  if (option == 'form') {
-    // Affichage du formulaire
-    form.style.left = '0';
-    form.style.height = '100%';
-    if (lightBox) {
-      divModal.removeChild(lightBox);
-    }
-  } else {
-    if (lightBox) {
-      divModal.removeChild(lightBox);
-    }
-
-    form.style.left = '-100rem';
-    form.style.order = '2';
-    form.style.height = '0';
-    lightBox.style.left = '0';
-    lightBox.style.top = '0';
-
-    console.log('light');
+  // main.style.opacity = 0.5;
+  // header[0].style.opacity = 0.5;
+  if (option === "form") {
+    console.log(option);
+    modal.style.display = "block";
+    form.style.display = "block";
+    divModal.removeChild(divLightBox);
+    main.style.opacity = 0.5;
+    header[0].style.opacity = 0.5;
+  }
+  if (option === "lightBox") {
+    console.log(option);
+    modal.style.display = "block";
+    form.style.display = "none";
   }
 }
-
 function closeModal() {
-  const modal = document.getElementById('contact_modal');
-  const main = document.getElementById('main');
-  const header = document.getElementsByTagName('header');
-  modal.style.left = '-65rem';
+  const modal = document.getElementById("contact_modal");
+  const main = document.getElementById("main");
+  const header = document.getElementsByTagName("header");
+  modal.style.display = "none";
   main.style.opacity = 1;
   header[0].style.opacity = 1;
 }
@@ -47,7 +36,7 @@ function closeModal() {
  * @param {string} photographerName
  */
 function getPhotographerName(photographerName) {
-  console.log('utils/contactFormjs');
-  const namePhotographer = document.querySelector('.modal-photographer');
+  console.log("utils/contactFormjs");
+  const namePhotographer = document.querySelector(".modal-photographer");
   namePhotographer.innerHTML += `<br> ${photographerName}`;
 }
