@@ -1,36 +1,44 @@
+const modal = document.getElementById("contact_modal");
+const divModal = document.querySelector(".modal");
+const main = document.getElementById("main");
 function displayModal(option) {
-  const modal = document.getElementById("contact_modal");
-  const main = document.getElementById("main");
-  const divModal = document.querySelector(".modal");
-  const divLightBox = document.querySelector(".lightBox");
-  const header = document.getElementsByTagName("header");
-  const form = document.querySelector(".modal-form");
-
-  // Diminution de l'opacité de l'arrière plan
-  // main.style.opacity = 0.5;
-  // header[0].style.opacity = 0.5;
-  if (option === "form") {
-    console.log(option);
-    modal.style.display = "block";
-    form.style.display = "block";
-    divModal.removeChild(divLightBox);
-    main.style.opacity = 0.5;
-    header[0].style.opacity = 0.5;
-  }
+  console.log(option);
+  modal.style.display = "block";
+  main.style.opacity = 0.5;
   if (option === "lightBox") {
-    console.log(option);
-    modal.style.display = "block";
-    form.style.display = "none";
+    modal.style.borderRadius = "none";
+    modal.style.position = "fixed";
+    divModal.style.display = "none";
+    modal.style.border = "2px solid #95FFF9";
+    const conteneurLightBox = modal.querySelector(".lightBox");
+
+    console.log(conteneurLightBox);
+    // Si la lightBox est présente, l'enlever
+    if (conteneurLightBox) {
+      modal.removeChild(conteneurLightBox);
+    }
+  }
+  if (option === "form") {
+    // Vérifier l'état du style "position" de #contact_modal
+    if (getComputedStyle(modal).getPropertyValue("position") !== "absolute") {
+      modal.style.position = "absolute";
+    }
+    modal.style.border = "none";
+    const conteneurLightBox = modal.querySelector(".lightBox");
+    // Si la lightBox est présente, l'enlever
+    if (conteneurLightBox) {
+      modal.removeChild(conteneurLightBox);
+    }
+    console.log(conteneurLightBox);
   }
 }
+
 function closeModal() {
-  const modal = document.getElementById("contact_modal");
-  const main = document.getElementById("main");
-  const header = document.getElementsByTagName("header");
   modal.style.display = "none";
   main.style.opacity = 1;
-  header[0].style.opacity = 1;
+  divModal.style.display = "block";
 }
+
 /**
  *  Function to put the name of photograph in contact modal
  * @param {string} photographerName

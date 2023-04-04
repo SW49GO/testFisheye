@@ -2,7 +2,10 @@
   display: none;
   position: absolute;
   top: 3rem;
+  margin: 0 auto;
   z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .photograph-header {
@@ -31,8 +34,6 @@
   color: #000;
 }
 .modal {
-  left:50%;
-  transform: translateX(50%);
   border-radius: 0.3125rem;
   background-color: #db8876;
   display: flex;
@@ -43,13 +44,13 @@
   margin: auto;
 }
 
-.modal header {
+.modal-header {
   justify-content: space-between;
   width: 100%;
   margin: 0 2rem 4rem;
 }
 
-.modal header img {
+.modal-close {
   position: relative;
   top: -1.875rem;
   cursor: pointer;
@@ -87,7 +88,7 @@ form input {
   border: none;
   border-radius: 0.3125rem;
 }
-input[name='message'] {
+input[name="message"] {
   height: 10rem;
 }
 .name-photographer {
@@ -232,4 +233,63 @@ hr {
 .conteneurImage {
   width: 20rem;
   height: 20rem;
+}
+.conteneurImages {
+  position: relative;
+  display: flex;
+  /* width: 380rem; */
+  height: 38rem;
+}
+ul {
+  list-style: none;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+.li-image {
+  display: inline-block;
+  position: relative;
+  width: 38rem;
+  height: 35rem;
+  padding: 1rem 2rem;
+  top: -0.25rem;
+}
+.conteneurLightBox {
+  /* height: 39rem; */
+  width: 38rem;
+  height: 38rem;
+  position: relative;
+  overflow: hidden;
+}
+.lightBox {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  width: 40rem;
+  overflow: hidden;
+}
+.icon-close {
+  font-size: 2rem;
+  color: #901c1c;
+  position: absolute;
+  top: 0.125rem;
+  right: 0.1rem;
+  z-index: 3;
+}
+.lightBox-photo {
+  border-radius: 0;
+}
+.arrow-left,
+.arrow-right {
+  font-size: 2rem;
+  color: #901c1c;
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+}
+.arrow-right {
+  right: 0;
+}
+.title-photo {
+  color: #901c1c;
 }

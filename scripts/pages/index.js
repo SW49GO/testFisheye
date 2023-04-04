@@ -1,11 +1,11 @@
-console.log('lancement du fichier index.js');
+console.log("lancement du fichier index.js");
 
 async function getJsonDataPhotographers() {
-  console.log('index.js ->getJsonDataPhotographers');
-  return await fetch('../../data/photographers.json')
+  console.log("index.js ->getJsonDataPhotographers");
+  return await fetch("../../data/photographers.json")
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       return response.json();
     })
@@ -13,7 +13,7 @@ async function getJsonDataPhotographers() {
       return data;
     })
     .catch((error) => {
-      console.error('Error:', error);
+      console.error("Error:", error);
     });
 }
 //Pour page photograph.html
@@ -32,7 +32,7 @@ async function getJsonDataPhotographers() {
  * @returns
  */
 async function getPhotograperById(photographers, id) {
-  console.log('index.js->getPhotograperById(photographers, id)');
+  console.log("index.js->getPhotograperById(photographers, id)");
   const personalPhotographer = photographers.filter(
     (user) => user.id === parseInt(id)
   );
@@ -46,7 +46,7 @@ async function getPhotograperById(photographers, id) {
  * @returns
  */
 async function getMediaById(media, id) {
-  console.log('index.js->getMediaById(media,id)');
+  console.log("index.js->getMediaById(media,id)");
   const mediaPhotographer = media.filter(
     (medias) => medias.photographerId === parseInt(id)
   );
@@ -54,19 +54,19 @@ async function getMediaById(media, id) {
   return mediaPhotographer;
 }
 async function getMediaFilter(media, id, options) {
-  console.log('index.js-> getMediaFilter(media, id, options)');
+  console.log("index.js-> getMediaFilter(media, id, options)");
 
   const medias = await getMediaById(media, id);
   // console.log(medias);
   let mediaFilter;
   switch (options) {
-    case '1':
+    case "1":
       mediaFilter = medias.sort((a, b) => b.likes - a.likes);
       break;
-    case '2':
+    case "2":
       mediaFilter = medias.sort((a, b) => b.dates - a.dates);
       break;
-    case '3':
+    case "3":
       mediaFilter = medias.sort((a, b) => a.title.localeCompare(b.title));
       break;
     default:
@@ -82,7 +82,7 @@ async function getMediaFilter(media, id, options) {
  * @returns
  */
 async function getNamePhotographer(photographers, id) {
-  console.log('index.js->getNamePhotopher(photographers,id)');
+  console.log("index.js->getNamePhotopher(photographers,id)");
   const photographerName = photographers
     .filter((photographer) => photographer.id === parseInt(id))
     .map((photographer) => photographer.name);
@@ -94,8 +94,8 @@ async function getNamePhotographer(photographers, id) {
  * @param {object} photographers
  */
 async function displayDataIndex(photographers) {
-  console.log('index.js->displayDataIndex');
-  const photographersSection = document.querySelector('.photographer_section');
+  console.log("index.js->displayDataIndex");
+  const photographersSection = document.querySelector(".photographer_section");
   photographers.forEach((photographer) => {
     const photographerData = { photographer };
     const photographerModel = photographerFactory(photographerData);
@@ -111,8 +111,8 @@ async function displayDataIndex(photographers) {
  * @param {object} photographers
  */
 async function displayDataPhotographer(media, photographers, idPhotographer) {
-  console.log('index.js->displayDataPhotographer');
-  const mediaSection = document.querySelector('.photograph-header');
+  console.log("index.js->displayDataPhotographer");
+  const mediaSection = document.querySelector(".photograph-header");
   const personalPhotographer = await getPhotograperById(
     photographers,
     idPhotographer
@@ -132,18 +132,18 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
   const pageCardDOM = pagePhotgrapher.getPagePhotographerDOM(numbLikesEncart);
   mediaSection.appendChild(pageCardDOM);
 
-  const btnFilter = document.querySelector('.btn-filter');
+  const btnFilter = document.querySelector(".btn-filter");
   console.log(btnFilter);
-  btnFilter.addEventListener('click', function () {
-    console.log('entrer addEventListener Index');
+  btnFilter.addEventListener("click", function () {
+    console.log("entrer addEventListener Index");
     displayMenuFilter(btnFilter);
   });
-  const selectMenuFilter = document.querySelectorAll('.select-menu-item');
+  const selectMenuFilter = document.querySelectorAll(".select-menu-item");
   for (let i = 0; i < selectMenuFilter.length; i++) {
-    selectMenuFilter[i].addEventListener('click', function () {
+    selectMenuFilter[i].addEventListener("click", function () {
       selectFilter(selectMenuFilter[i], btnFilter);
-      const selectedMenuFilter = document.querySelector('.select-menu');
-      selectedMenuFilter.classList.remove('show');
+      const selectedMenuFilter = document.querySelector(".select-menu");
+      selectedMenuFilter.classList.remove("show");
     });
   }
 }
@@ -157,13 +157,13 @@ async function displayDataPhotographer(media, photographers, idPhotographer) {
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
  */
 async function displayMedia(media, photographers, idPhotographer, options) {
-  console.log('trier par :' + options);
+  console.log("trier par :" + options);
 
   const mediaPhotographer = await getMediaById(media, idPhotographer);
 
-  console.log('index.js->displaymedia');
+  console.log("index.js->displaymedia");
 
-  const mediaImage = document.querySelector('.photograph-header');
+  const mediaImage = document.querySelector(".photograph-header");
   const personalPhotographer = await getPhotograperById(
     photographers,
     idPhotographer
@@ -186,18 +186,18 @@ async function displayMedia(media, photographers, idPhotographer, options) {
 
   // Initialisation d'un tableau pour le stockage des data-ref des Likes des Photos
   // Ecouteur d'évèement sur chaque icône Like et appelle de la fonction number() pour le traitement
-  const numberLikes = document.querySelectorAll('.number-likes');
+  const numberLikes = document.querySelectorAll(".number-likes");
   const tabRef = [];
   for (let i = 0; i < numberLikes.length; i++) {
-    numberLikes[i].addEventListener('click', function () {
+    numberLikes[i].addEventListener("click", function () {
       number(numberLikes[i], tabRef);
     });
   }
 
   // Gestionnaire d'évènement sur chaque photo
-  const listPhotos = document.querySelectorAll('.list-photos');
+  const listPhotos = document.querySelectorAll(".list-photos");
   for (let i = 0; i < listPhotos.length; i++) {
-    listPhotos[i].addEventListener('click', function (e) {
+    listPhotos[i].addEventListener("click", function (e) {
       e.preventDefault();
       selectPhotoLightBox(listPhotos[i]);
     });
@@ -210,38 +210,63 @@ async function displayLightBox(
   selectPhoto,
   idPhotographer
 ) {
-  console.log('index.js->displayLightBox');
-  const mediaPhotographer = await getMediaById(media, idPhotographer);
-  const name = await getNamePhotographer(photographers, idPhotographer);
+  console.log(selectPhoto);
+  if (selectPhoto !== "1") {
+    console.log("index.js->displayLightBox");
+    const mediaPhotographer = await getMediaById(media, idPhotographer);
+    const name = await getNamePhotographer(photographers, idPhotographer);
 
-  const modal = document.querySelector('.modal');
+    const modal = document.getElementById("contact_modal");
+    // Nombre de Medias
+    const nbMedias = mediaPhotographer.length;
 
-  console.log(modal);
-  const mediaModel = mediaFactory(mediaPhotographer);
-  const mediaLightBoxDOM = mediaModel.getLightBoxDOM(selectPhoto, name);
-  if (mediaLightBoxDOM != null) {
-    modal.appendChild(mediaLightBoxDOM);
+    const mediaModel = mediaFactory(mediaPhotographer);
+    const mediaLightBoxDOM = mediaModel.getLightBoxDOM(selectPhoto, name);
+    if (mediaLightBoxDOM != null) {
+      modal.appendChild(mediaLightBoxDOM);
+      const ul = modal
+        .querySelector(".lightBox")
+        .querySelector(".conteneurLightBox")
+        .querySelector(".conteneurImages");
+      // Ajustement du conteneur par rapport au nombre de medias
+      ul.style.width = `${38 * nbMedias}rem`;
+      // Ecouteur d'évènement sur les flèches
+      const arrowLeft = modal
+        .querySelector(".lightBox")
+        .querySelector(".conteneurLightBox")
+        .querySelector(".arrow-left");
+      arrowLeft.addEventListener("click", function () {
+        goToLeftPhoto(nbMedias);
+      });
+      const arrowRight = modal
+        .querySelector(".lightBox")
+        .querySelector(".conteneurLightBox")
+        .querySelector(".arrow-right");
+      arrowRight.addEventListener("click", function () {
+        goToRightPhoto(nbMedias);
+      });
+    }
   }
 }
 /**
  * Function to initialize all display
  * @param {string} selectDisplayOption->popularite:1, date:2, titre:3
  */
-async function init(options = '') {
-  console.log('index.js->init');
+async function init(options = "") {
+  console.log("index.js->init");
   const { media, photographers } = await getJsonDataPhotographers();
 
-  if (window.location.href.includes('index.html')) {
+  if (window.location.href.includes("index.html")) {
     displayDataIndex(photographers);
   }
   if (window.location.href.includes(`photographer.html`)) {
     const urlParams = new URLSearchParams(window.location.search);
-    const idPhotographer = urlParams.get('identify');
+    const idPhotographer = urlParams.get("identify");
 
     getPhotograperById(photographers, idPhotographer);
     getMediaById(media, idPhotographer);
     displayDataPhotographer(media, photographers, idPhotographer);
-    displayMedia(media, photographers, idPhotographer, (options = '1'));
+    displayMedia(media, photographers, idPhotographer, (options = "1"));
     const name = await getNamePhotographer(photographers, idPhotographer);
     getPhotographerName(name);
     displayLightBox(media, photographers, options, idPhotographer);

@@ -1,12 +1,12 @@
 // //Mettre le code JavaScript lié à la page photographer.html
 
-console.log('pages/photographers.js');
+console.log("pages/photographers.js");
 
 const urlParams = new URLSearchParams(window.location.search);
-const idPhotographer = urlParams.get('identify');
+const idPhotographer = urlParams.get("identify");
 
 function number(numberLikes, tabRef) {
-  const encart = document.querySelector('.likes');
+  const encart = document.querySelector(".likes");
   let photoLike = parseInt(numberLikes.textContent);
   console.log(photoLike);
   const refLike = numberLikes.childNodes[1].dataset.ref;
@@ -31,30 +31,30 @@ function number(numberLikes, tabRef) {
 }
 
 function displayMenuFilter(btnFilter) {
-  console.log('entrer dans le button');
+  console.log("entrer dans le button");
 
   // console.log('photographer.js/ ->btnSord addEventlistener');
-  const selectedMenuFilter = document.querySelector('.select-menu');
+  const selectedMenuFilter = document.querySelector(".select-menu");
   console.log(selectedMenuFilter.classList);
-  selectedMenuFilter.classList.toggle('show');
+  selectedMenuFilter.classList.toggle("show");
 
-  const chevronFilter = btnFilter.querySelector('.chevron-filter');
-  const txtFilter = btnFilter.querySelector('.txt-filter');
+  const chevronFilter = btnFilter.querySelector(".chevron-filter");
+  const txtFilter = btnFilter.querySelector(".txt-filter");
 
-  if (txtFilter.textContent === '') {
-    chevronFilter.innerHTML = selectedMenuFilter.classList.contains('show')
+  if (txtFilter.textContent === "") {
+    chevronFilter.innerHTML = selectedMenuFilter.classList.contains("show")
       ? '<i class="fa-solid fa-chevron-down"></i>'
       : '<i class="fa-solid  fa-angle-up"></i>';
   } else {
-    chevronFilter.innerHTML = selectedMenuFilter.classList.contains('show')
+    chevronFilter.innerHTML = selectedMenuFilter.classList.contains("show")
       ? '<i class="fa-solid fa-angle-up"></i>'
       : '<i class="fa-solid fa-chevron-down"></i>';
   }
 }
 function selectFilter(selectMenuFilter, btnFilter) {
-  console.log('entrer selection menu');
+  console.log("entrer selection menu");
   // Positionnement du chevron
-  const chevronFilter = btnFilter.querySelector('.chevron-filter');
+  const chevronFilter = btnFilter.querySelector(".chevron-filter");
   chevronFilter.innerHTML = `<i class="fa-solid fa-chevron-down"></i>`;
   const button = btnFilter.childNodes[0];
   const buttonTxt = button.textContent;
@@ -67,14 +67,14 @@ function selectFilter(selectMenuFilter, btnFilter) {
   console.log(choiceName);
   let select;
   switch (choiceName) {
-    case 'Popularité':
-      select = '1';
+    case "Popularité":
+      select = "1";
       break;
-    case 'Date':
-      select = '2';
+    case "Date":
+      select = "2";
       break;
-    case 'Titre':
-      select = '3';
+    case "Titre":
+      select = "3";
       break;
   }
 
@@ -85,18 +85,18 @@ function selectFilter(selectMenuFilter, btnFilter) {
 }
 // //////////////////////////////////////////////////////////////////////
 ///// Soumission du formulaire
-const form = document.querySelector('.modal-form');
+const form = document.querySelector(".modal-form");
 if (form != null) {
-  form.addEventListener('submit', function (event) {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
     console.log(
-      'Votre prénom : ' +
+      "Votre prénom : " +
         event.target.firstname.value +
-        '\nVotre nom : ' +
+        "\nVotre nom : " +
         event.target.lastname.value +
-        '\nVotre adresse Email : ' +
+        "\nVotre adresse Email : " +
         event.target.email.value +
-        '\nVotre message : ' +
+        "\nVotre message : " +
         event.target.message.value
     );
     closeModal();
@@ -110,5 +110,29 @@ function selectPhotoLightBox(photo) {
   getJsonDataPhotographers().then(({ media, photographers }) => {
     displayLightBox(media, photographers, idPhoto, idPhotographer);
   });
-  displayModal('lightBox');
+  displayModal("lightBox");
+}
+let position = 0;
+function goToLeftPhoto(nbMedias) {
+  console.log(nbMedias);
+  console.log("left");
+
+  const ul = modal
+    .querySelector(".lightBox")
+    .querySelector(".conteneurLightBox")
+    .querySelector(".conteneurImages");
+  console.log(ul);
+  ul.style.transform = `translateX(-38rem)`;
+  ul.style.transition = "all 0.5s ease";
+}
+function goToRightPhoto(nbMedias) {
+  console.log(nbMedias);
+  console.log("right");
+
+  const ul = modal
+    .querySelector(".lightBox")
+    .querySelector(".conteneurLightBox")
+    .querySelector(".conteneurImages");
+  console.log(ul);
+  ul.style.transform = `translateX(38rem)`;
 }
