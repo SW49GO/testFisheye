@@ -112,27 +112,102 @@ function selectPhotoLightBox(photo) {
   });
   displayModal("lightBox");
 }
-let position = 0;
-function goToLeftPhoto(nbMedias) {
-  console.log(nbMedias);
-  console.log("left");
 
-  const ul = modal
-    .querySelector(".lightBox")
-    .querySelector(".conteneurLightBox")
-    .querySelector(".conteneurImages");
-  console.log(ul);
-  ul.style.transform = `translateX(-38rem)`;
-  ul.style.transition = "all 0.5s ease";
+/**
+ * Function to initialize "i" that is the index of the photo selected
+ * @param {string} indexPhoto
+ * @returns
+ */
+function getValueIndex(indexPhoto) {
+  console.log(indexPhoto);
+  i = parseInt(indexPhoto);
+  return i;
 }
-function goToRightPhoto(nbMedias) {
-  console.log(nbMedias);
-  console.log("right");
+// Variable i=indexPhoto
+let i;
+console.log(i);
 
-  const ul = modal
-    .querySelector(".lightBox")
-    .querySelector(".conteneurLightBox")
-    .querySelector(".conteneurImages");
-  console.log(ul);
-  ul.style.transform = `translateX(38rem)`;
+/**
+ * Function to show the next photo
+ * @param {*} nbMedias
+ */
+function goToPreviewPhoto(nbMedias) {
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".lightBox-photo")
+    .classList.toggle("hidden");
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".title-photo")
+    .classList.toggle("hidden");
+  // console.log(nbMedias.length);
+  console.log("left");
+  i--;
+  // if (i >= 0) {
+  //   i = Math.abs(i % nbMedias.length);
+  // } else {
+  //   i = nbMedias.length - Math.abs(i % nbMedias.length);
+  // }
+  // Affecte un valeur positif à i, si i est négatif
+  i = ((i % nbMedias.length) + nbMedias.length) % nbMedias.length;
+
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".lightBox-photo")
+    .classList.toggle("hidden");
+  console.log(
+    document.getElementById("contact_modal").querySelectorAll(".li-image")[i]
+  );
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".title-photo")
+    .classList.toggle("hidden");
+}
+
+/**
+ * Function to go to the preview photo
+ * @param {} nbMedias
+ */
+function goToNextPhoto(nbMedias) {
+  // console.log(nbMedias.length);
+  // Effacement de l'image et son titre en cours
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".lightBox-photo")
+    .classList.toggle("hidden");
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".title-photo")
+    .classList.toggle("hidden");
+
+  console.log("right");
+  i++;
+  // if (i >= 0) {
+  //   i = Math.abs(i % nbMedias.length);
+  // } else {
+  //   i = nbMedias.length - Math.abs(i % nbMedias.length);
+  // }
+  // Affecte un valeur positif à i, si i est négatif
+  i = ((i % nbMedias.length) + nbMedias.length) % nbMedias.length;
+
+  // Apparition de la prochain photo et son titre
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".lightBox-photo")
+    .classList.toggle("hidden");
+  console.log(
+    document.getElementById("contact_modal").querySelectorAll(".li-image")[i]
+  );
+  document
+    .getElementById("contact_modal")
+    .querySelectorAll(".li-image")
+    [i].querySelector(".title-photo")
+    .classList.toggle("hidden");
 }

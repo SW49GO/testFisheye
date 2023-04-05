@@ -27,7 +27,7 @@ function mediaFactory(data) {
     const parentArticle = document.querySelector(".photograph-header");
     const theLastArticle = document.querySelector(".list-article");
     if (theLastArticle) {
-      parentArticle.removeChild(theLastArticle);
+      parentArticleNaNpxoveChild(theLastArticle);
     }
     const article = document.createElement("article");
     article.className = "list-article";
@@ -64,8 +64,15 @@ function mediaFactory(data) {
     console.log("selectionPhoto" + selectPhoto);
     // Récupération du nom pour le chemin d'accès au fichier
     const path = name[0].split(" ")[0];
-    console.log(path);
-    // Déterminer de quel média il s'agit pour la photo ou video sélectionner
+    // Récupération de l'index de la photo sélectionnée d'après son id
+    const indexPhoto = data
+      .map((photo) => photo.id == selectPhoto)
+      .indexOf(true);
+    console.log(indexPhoto);
+    // Envoi de la valeur de l'index de la photo
+    getValueIndex(indexPhoto);
+    // Déterminer le format du media s'il s'agit pour la photo ou video sélectionner
+
     const formatPhoto = data
       .filter((photo) => photo.id == selectPhoto)
       .map((format) => format.image);
@@ -97,20 +104,22 @@ function mediaFactory(data) {
                           </div>
                           <ul class="conteneurImages">`;
 
-    // Création de tout les rendus
-    data.forEach((item) => {
+    // Création du rendu
+    data.forEach((item, index) => {
+      // Définition d'une classe en fonction de la photo sélectionnée
+      const classed = indexPhoto == index ? "show" : "hidden";
       if (item.image) {
-        displayMedia += `<li class="li-image">
-                          <img class="list-photos lightBox-photo" src="assets/photographers/${path}/${item.image}" alt="photo sélectionnée">
-                          <p class="title-photo">${item.title}</p>
+        displayMedia += `<li class="li-image" data-index="${index}">
+                          <img class="list-photos lightBox-photo ${classed}" src="assets/photographers/${path}/${item.image}" alt="photo sélectionnée">
+                          <p class="title-photo ${classed}">${item.title}</p>
                         </li>`;
       }
       if (item.video) {
-        displayMedia += ` <li class="li-image">
-                            <video class="video list-photos lightBox-photo" controls width="100" aria-label="Vidéo : ${item.video}">
+        displayMedia += ` <li class="li-image" data-index="${index}">
+                            <video class="video list-photos lightBox-photo ${classed}" controls width="100" aria-label="Vidéo : ${item.video}">
                               <source src="assets/photographers/${path}/${item.video}" type="video/mp4">
                             </video>
-                            <p class="title-photo">${item.title}</p>
+                            <p class="title-photo ${classed}">${item.title}</p>
                           </li>`;
       }
     });

@@ -224,26 +224,18 @@ async function displayLightBox(
     const mediaLightBoxDOM = mediaModel.getLightBoxDOM(selectPhoto, name);
     if (mediaLightBoxDOM != null) {
       modal.appendChild(mediaLightBoxDOM);
-      const ul = modal
-        .querySelector(".lightBox")
-        .querySelector(".conteneurLightBox")
-        .querySelector(".conteneurImages");
+      const ul = modal.querySelector(".conteneurImages");
+      console.log(ul);
       // Ajustement du conteneur par rapport au nombre de medias
       ul.style.width = `${38 * nbMedias}rem`;
       // Ecouteur d'évènement sur les flèches
-      const arrowLeft = modal
-        .querySelector(".lightBox")
-        .querySelector(".conteneurLightBox")
-        .querySelector(".arrow-left");
+      const arrowLeft = modal.querySelector(".arrow-left");
       arrowLeft.addEventListener("click", function () {
-        goToLeftPhoto(nbMedias);
+        goToPreviewPhoto(mediaPhotographer);
       });
-      const arrowRight = modal
-        .querySelector(".lightBox")
-        .querySelector(".conteneurLightBox")
-        .querySelector(".arrow-right");
+      const arrowRight = modal.querySelector(".arrow-right");
       arrowRight.addEventListener("click", function () {
-        goToRightPhoto(nbMedias);
+        goToNextPhoto(mediaPhotographer);
       });
     }
   }

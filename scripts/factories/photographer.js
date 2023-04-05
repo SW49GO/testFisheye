@@ -4,7 +4,7 @@
  * @returns getUserCardDOM, getPagePhotographerDOM ->HTMLElement
  */
 function photographerFactory(data) {
-  console.log('factories/photographer.js');
+  console.log("factories/photographer.js");
   // Extraction des propriétés de l'objet data pour photographer à l'aide de la déstructuration
   const { name, id, city, country, tagline, price, portrait } =
     data.photographer;
@@ -16,11 +16,11 @@ function photographerFactory(data) {
    * @returns HTMLElement(article)
    */
   function getUserCardDOM() {
-    console.log('factories/photographer.js->getUserCardDOM');
+    console.log("factories/photographer.js->getUserCardDOM");
     // Création des éléments HTML pour représenter la carte utilisateur
-    const article = document.createElement('article');
+    const article = document.createElement("article");
     article.setAttribute(
-      'aria-label',
+      "aria-label",
       "Carte d'identité du photographe " + name
     );
     article.innerHTML = `<a href="photographer.html?identify=${id}" aria-label="Lien vers la page du photographe ${name}">
@@ -42,12 +42,12 @@ function photographerFactory(data) {
    * @returns HTMLElement(article)
    */
   function getPagePhotographerDOM(numbLikes) {
-    console.log('factories/photographer.js->getPagePhotographerDOM');
-    const verif = document.querySelector('.photographer-header-article');
+    console.log("factories/photographer.js->getPagePhotographerDOM");
+    const verif = document.querySelector(".photographer-header-article");
     console.log(verif);
     if (!verif) {
-      const article = document.createElement('article');
-      article.className = 'photographer-header-article';
+      const article = document.createElement("article");
+      article.className = "photographer-header-article";
       article.innerHTML = `<div class="photographer-identity" data-identity="${id}">
                             <div  aria-label="Localisation, slogan et tarifs du photographe ${name}">
                               <h2 class="name-photographer">${name}</h2>

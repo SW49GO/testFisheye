@@ -223,6 +223,9 @@ hr {
 .show {
   display: block;
 }
+.hidden {
+  display: none;
+}
 /* .ligthBox {
   position: relative;
   width: 18.75rem;
@@ -247,16 +250,14 @@ ul {
   padding: 0;
 }
 .li-image {
-  display: inline-block;
-  position: relative;
-  width: 38rem;
-  height: 35rem;
+  position: absolute;
+  width: 44rem;
+  height: 37rem;
   padding: 1rem 2rem;
   top: -0.25rem;
 }
 .conteneurLightBox {
-  /* height: 39rem; */
-  width: 38rem;
+  width: 44rem;
   height: 38rem;
   position: relative;
   overflow: hidden;
@@ -265,7 +266,7 @@ ul {
   display: flex;
   justify-content: center;
   background-color: #fff;
-  width: 40rem;
+  width: 46rem;
   overflow: hidden;
 }
 .icon-close {
@@ -292,4 +293,5 @@ ul {
 }
 .title-photo {
   color: #901c1c;
+  padding-top: 0.3rem;
 }
